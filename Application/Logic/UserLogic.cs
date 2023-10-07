@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Application.DAOInterfaces;
 using Application.LogicInterfaces;
-using Domain.DTO;
+using Domain.DTOs.UserDTO;
 using Domain.Model;
 
 namespace Application.Logic;
@@ -34,6 +34,11 @@ public class UserLogic:IUserLogic
         User created = await userDAO.CreateAsync(toCreate);
     
         return created;
+    }
+
+    public Task<IEnumerable<User>> GetAsync(SearchUserParametersDTO searchParameters)
+    {
+        return userDAO.GetAsync(searchParameters);
     }
 
     private static void ValidateData(UserCreationDTO userCreationDTO)
