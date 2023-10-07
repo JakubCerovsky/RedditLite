@@ -4,13 +4,7 @@
       "Id": 1,
       "Username": "Jakub",
       "Password": "Jakub123",
-      "Posts": null
-    },
-    {
-      "Id": 2,
-      "Username": "Natalia",
-      "Password": "Natalia839",
-      "Posts": null
+      "Posts": []
     }
   ],
   "Posts": []
