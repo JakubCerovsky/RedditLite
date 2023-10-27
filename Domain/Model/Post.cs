@@ -1,8 +1,11 @@
-﻿namespace Domain.Model;
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Model;
 
 public class Post
 {
     public int Id { get; set; }
+    [JsonIgnore]
     public User Owner { get; }
     public string Title { get; set; }
     public string Body { get; set; }

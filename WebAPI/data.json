@@ -4,8 +4,20 @@
       "Id": 1,
       "Username": "Jakub",
       "Password": "Jakub123",
-      "Posts": []
+      "Posts": [
+        {
+          "Id": 1,
+          "Title": "string",
+          "Body": "string"
+        }
+      ]
     }
   ],
-  "Posts": []
+  "Posts": [
+    {
+      "Id": 1,
+      "Title": "string",
+      "Body": "string"
+    }
+  ]
 }

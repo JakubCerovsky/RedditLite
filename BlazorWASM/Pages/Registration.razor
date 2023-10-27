@@ -1,0 +1,24 @@
+@page "/Registration"
+<div class="container flex-column justify-content-center align-content-center w-100">
+    <h1 class="text-center">Sign Up!</h1>
+    <form class="container my-4">
+        <div class="row justify-content-evenly">
+            <input asp-for="Input.FirstName" class="col-4" type="text" placeholder="Username"/>
+            <input asp-for="Input.LateName" class="col-4" type="password" placeholder="Password"/>
+        </div>
+        <div class="row justify-content-evenly my-4">
+            <input asp-for="Input.Email" class="col-4" type="text" placeholder="Email"/>
+            <input asp-for="Input.Phone" class="col-4" type="text" placeholder="Location"/>
+        </div>
+        <div class="row justify-content-center">
+            <input type="submit" class="w-auto" value="Sign Up">
+        </div>
+    </form>
+    <div class="d-flex justify-content-center">
+        <p>Already user?</p><a class="ms-1" href="/Login">Log in</a>
+    </div>
+</div>
+
+@code {
+    
+}

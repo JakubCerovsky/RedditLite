@@ -25,9 +25,7 @@ public class PostFileDAO:IPostDAO
         post.Id = postId;
 
         context.Posts.Add(post);
-        List<Post> posts = new List<Post>();
-        posts.Add(post);
-        post.Owner.Posts = posts;
+        post.Owner.Posts.Add(post);
         context.SaveChanges();
 
 
