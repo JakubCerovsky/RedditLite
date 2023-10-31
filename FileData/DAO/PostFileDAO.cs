@@ -25,13 +25,18 @@ public class PostFileDAO:IPostDAO
         post.Id = postId;
 
         context.Posts.Add(post);
-        List<Post> posts = new List<Post>();
-        posts.Add(post);
-        post.Owner.Posts = posts;
+        context.Users
+            .FirstOrDefault(user => post.OwnerUsername.Equals(user.Username, StringComparison.OrdinalIgnoreCase)).Posts
+            .Add(post);
         context.SaveChanges();
 
 
 
         return Task.FromResult(post);
+    }
+
+    public Task<IEnumerable<Post>> GetAsync()
+    {
+        return Task<IEnumerable<Post>>.FromResult(context.Posts.AsEnumerable());
     }
 }

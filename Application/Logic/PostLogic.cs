@@ -18,14 +18,20 @@ public class PostLogic:IPostLogic
 
     public async Task<Post> CreateAsync(PostCreationDTO postToCreate)
     {
-        User? owner = await userDAO.GetByIdAsync(postToCreate.OwnerId);
-        if (owner == null)
-            throw new Exception($"User with ID - {postToCreate.OwnerId} - was not found.");
-
         ValidatePost(postToCreate);
-        Post post = new Post(owner, postToCreate.Title, postToCreate.Body);
+
+        User? owner = await userDAO.GetByUsernameAsync(postToCreate.OwnerUsername);
+        if (owner == null)
+            throw new Exception($"User with Username - {postToCreate.OwnerUsername} - was not found.");
+
+        Post post = new Post(owner.Username, postToCreate.Title, postToCreate.Body);
         Post created = await postDAO.CreateAsync(post);
         return created;
+    }
+
+    public async Task<IEnumerable<Post>> GetAsync()
+    {
+        return await postDAO.GetAsync();
     }
 
     private static void ValidatePost(PostCreationDTO postToValidate)
@@ -35,5 +41,8 @@ public class PostLogic:IPostLogic
         
         if (string.IsNullOrEmpty(postToValidate.Body)) 
             throw new Exception("Body cannot be empty.");
+        
+        if (string.IsNullOrEmpty(postToValidate.OwnerUsername))
+            throw new Exception($"Username has to be set.");
     }
 }

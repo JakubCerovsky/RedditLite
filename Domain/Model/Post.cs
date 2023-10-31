@@ -1,15 +1,17 @@
-﻿namespace Domain.Model;
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Model;
 
 public class Post
 {
     public int Id { get; set; }
-    public User Owner { get; }
+    public string OwnerUsername { get; }
     public string Title { get; set; }
     public string Body { get; set; }
     
-    public Post(User owner, string title, string body)
+    public Post(string ownerUsername, string title, string body)
     {
-        Owner = owner;
+        OwnerUsername = ownerUsername;
         Title = title;
         Body = body;
     }
