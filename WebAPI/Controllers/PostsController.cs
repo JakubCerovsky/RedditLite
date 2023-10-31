@@ -30,4 +30,19 @@ public class PostsController:ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Post>>> GetAsync()
+    {
+        try
+        {
+            IEnumerable<Post> posts = await postLogic.GetAsync();
+            return Ok(posts);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

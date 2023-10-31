@@ -7,6 +7,20 @@
       "Posts": [
         {
           "Id": 1,
+          "OwnerUsername": null,
+          "Title": "string",
+          "Body": "string"
+        }
+      ]
+    },
+    {
+      "Id": 2,
+      "Username": "string",
+      "Password": "stringS12",
+      "Posts": [
+        {
+          "Id": 2,
+          "OwnerUsername": "string",
           "Title": "string",
           "Body": "string"
         }
@@ -16,6 +30,13 @@
   "Posts": [
     {
       "Id": 1,
+      "OwnerUsername": null,
+      "Title": "string",
+      "Body": "string"
+    },
+    {
+      "Id": 2,
+      "OwnerUsername": "string",
       "Title": "string",
       "Body": "string"
     }

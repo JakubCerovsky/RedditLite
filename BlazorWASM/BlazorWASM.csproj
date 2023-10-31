@@ -17,7 +17,6 @@
 
     <ItemGroup>
       <AdditionalFiles Include="Pages\Registration.razor" />
-      <AdditionalFiles Include="Shared\Registration.razor" />
     </ItemGroup>
 
 </Project>
