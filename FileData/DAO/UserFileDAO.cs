@@ -13,13 +13,13 @@ public class UserFileDAO:IUserDAO
         this.context = context;
     }
 
-    public Task<User> CreateAsync(User user)
+    public Task CreateAsync(User user)
     {
 
         context.Users.Add(user);
         context.SaveChanges();
 
-        return Task.FromResult(user);
+        return Task.CompletedTask;
     }
 
     public Task<User?> GetByUsernameAsync(string username)

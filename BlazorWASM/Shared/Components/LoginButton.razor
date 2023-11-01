@@ -1,5 +1,28 @@
-<h3>LoginButton</h3>
+@using HttpClient.ClientInterfaces
+@inject IUserService authService
+@inject NavigationManager navMgr
+
+<AuthorizeView>
+    <NotAuthorized>
+        <span class="oi oi-account-login text-danger fs-5" style="cursor: pointer" @onclick="Login"></span>
+    </NotAuthorized>
+    <Authorized>
+        <div class="d-flex align-items-center">
+            <ProfileButton Username="@context.User.Identity.Name" />
+            <span class="oi oi-account-logout text-danger" style="cursor: pointer" @onclick="Logout"></span>
+        </div>
+    </Authorized>
+</AuthorizeView>
 
 @code {
-    
+    private void Login()
+    {
+        navMgr.NavigateTo("/Login");
+    }
+
+    private async Task Logout()
+    {
+        await authService.LogoutAsync();
+        navMgr.NavigateTo("/");
+    }
 }

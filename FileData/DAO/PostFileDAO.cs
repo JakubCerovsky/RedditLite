@@ -39,4 +39,10 @@ public class PostFileDAO:IPostDAO
     {
         return Task<IEnumerable<Post>>.FromResult(context.Posts.AsEnumerable());
     }
+    
+    public Task<Post?> GetByIdAsync(int id)
+    {
+        return Task.FromResult(context.Posts.FirstOrDefault(p => 
+            p.Id==id));
+    }
 }

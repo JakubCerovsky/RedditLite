@@ -1,0 +1,12 @@
+.postcard{
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.postcard:not(:last-of-type){
+    margin-bottom: 4rem;
+}
+
+.postcard:hover{
+    transform: scale(1.02);
+}

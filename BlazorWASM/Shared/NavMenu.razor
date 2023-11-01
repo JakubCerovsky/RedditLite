@@ -1,8 +1,8 @@
 ﻿<div class="top-row ps-3 navbar">
     <div class="container-fluid">
-        <a class="navbar-brand text-danger fw-bold text-center text-" href="">RedditLite</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="hamburger navbar-toggler-icon"></span>
+        <a class="navbar-brand text-danger fw-bold fs-3 text-center align-items-center" href="/">RedditLite</a>
+        <button title="Navigation menu" class="navbar-toggler hamburger" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
         </button>
     </div>
 </div>
@@ -14,16 +14,14 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        @* <div class="nav-item px-3"> *@
-        @*     <NavLink class="nav-link text-danger fw-bold" href="counter"> *@
-        @*         <span class="oi oi-plus" aria-hidden="true"></span> Counter *@
-        @*     </NavLink> *@
-        @* </div> *@
-        @* <div class="nav-item px-3"> *@
-        @*     <NavLink class="nav-link text-danger fw-bold" href="fetchdata"> *@
-        @*         <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data *@
-        @*     </NavLink> *@
-        @* </div> *@
+ <AuthorizeView>
+             <div class="nav-item px-3">
+                 <NavLink class="nav-link text-danger fw-bold" href="/CreatePost">
+                     <span class="oi oi-plus" aria-hidden="true"></span> Create Post
+                 </NavLink>
+             </div>
+ </AuthorizeView>       
+
     </nav>
 </div>
 

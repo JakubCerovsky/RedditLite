@@ -1,0 +1,59 @@
+@page "/MyProfile"
+@using Domain.Model
+@using HttpClient.ClientInterfaces
+@inject IUserService userService
+@using System.Security.Claims
+@using Domain.DTOs.UserDTO
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+    <NotAuthorized>
+            <h1 class="text-danger text-center">You do not have access to this page unless you are a registered user!</h1>
+    </NotAuthorized>
+    <Authorized>
+        @if (!string.IsNullOrEmpty(errorLabel))
+        {
+            <div class="field">
+                <label style="color: red">
+                    @errorLabel
+                </label>
+            </div>
+        }
+        
+        @if (user != null)
+        {
+            <h1 class="mt-3 mb-5 text-light">Hello @user.Username!</h1>
+            @foreach (var post in user.Posts)
+            {
+                <PostComponent Title="@post.Title" OwnerUsername="@post.OwnerUsername" Body="@post.Body"/>
+            }
+        }
+
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    User user;
+    private string errorLabel;
+
+    
+    private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        errorLabel = "";
+        var authState = await AuthenticationStateProvider
+            .GetAuthenticationStateAsync();
+        var authUser = authState.User;
+        try
+        {
+            SearchUserParametersDTO userParameters = new(null, authUser.Identity.Name);
+            user = await userService.GetSingleAsync(userParameters);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"{e.Message}";
+        }
+    }
+}

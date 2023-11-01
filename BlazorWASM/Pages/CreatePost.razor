@@ -1,0 +1,64 @@
+@page "/CreatePost"
+@using HttpClient.ClientInterfaces
+@using Domain.DTOs.PostDTO
+@inject IPostService postService
+@inject NavigationManager navMgr
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+    <NotAuthorized>
+            <h1 class="text-danger text-center">You do not have access to this page unless you are a registered user!</h1>
+    </NotAuthorized>
+    <Authorized>
+        <div class="card">
+                    <h3>Create Post!</h3>
+                    <div class="field">
+                        <label>Title:</label>
+                        <input type="text" @bind="title"/>
+                    </div>
+                    <div class="field">
+                        <label style="text-align: center">Text:</label>
+                        <textarea rows="4" cols="22" type="text" @bind="body"></textarea>
+                    </div>
+                    @if (!string.IsNullOrEmpty(errorLabel))
+                    {
+                        <div class="field">
+                            <label style="color: red">
+                                @errorLabel
+                            </label>
+                        </div>
+                    }
+                    <div class="field">
+                        <button class="loginbtn" @onclick="CreateAsync">Create</button>
+                    </div>
+                </div>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private string title;
+    private string body;
+    private string errorLabel;
+    
+    private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
+
+    private async Task CreateAsync()
+    {
+        errorLabel = "";
+        var authState = await AuthenticationStateProvider
+            .GetAuthenticationStateAsync();
+        var user = authState.User;
+        try
+        {
+            PostCreationDTO postToCreate = new(user.Identity.Name, title, body);
+            await postService.CreateAsync(postToCreate);
+            navMgr.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"{e.Message}";
+        }
+    }
+}

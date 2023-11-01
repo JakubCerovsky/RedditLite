@@ -1,0 +1,10 @@
+.profile{
+    transition: 0.5s;
+    cursor: pointer;
+    padding: 3px 5px;
+    border-radius: 4px;
+}
+
+.profile:hover{
+    background-color: rgb(255, 192, 203, 0.5);
+}
