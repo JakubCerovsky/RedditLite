@@ -1,24 +1,64 @@
+@using HttpClient.ClientInterfaces
+@using Domain.DTOs.UserDTO
+@inject IUserService userService
+@inject NavigationManager navMgr
 @page "/Registration"
-<div class="container flex-column justify-content-center align-content-center w-100">
-    <h1 class="text-center">Sign Up!</h1>
-    <form class="container my-4">
-        <div class="row justify-content-evenly">
-            <input asp-for="Input.FirstName" class="col-4" type="text" placeholder="Username"/>
-            <input asp-for="Input.LateName" class="col-4" type="password" placeholder="Password"/>
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="card">
+            <h3>Sign Up!</h3>
+            <div class="field">
+                <label>Username:</label>
+                <input type="text" @bind="userName"/>
+            </div>
+            <div class="field">
+                <label style="text-align: center">Password:</label>
+                <input type="password" @bind="password"/>
+            </div>
+            @if (!string.IsNullOrEmpty(errorLabel))
+            {
+                <div class="field">
+                    <label style="color: red">
+                        @errorLabel
+                    </label>
+                </div>
+            }
+            <div class="field">
+                <button class="loginbtn" @onclick="RegisterAsync">Sign Up</button>
+            </div>
+            <div class="d-flex justify-content-center mt-3"><p class="mb-0 me-1">Already a user? </p><a href="/Login">Log In!</a></div>
         </div>
-        <div class="row justify-content-evenly my-4">
-            <input asp-for="Input.Email" class="col-4" type="text" placeholder="Email"/>
-            <input asp-for="Input.Phone" class="col-4" type="text" placeholder="Location"/>
+    </NotAuthorized>
+    <Authorized>
+        <div class="card">
+            <h3>Hello, @context.User.Identity.Name</h3>
         </div>
-        <div class="row justify-content-center">
-            <input type="submit" class="w-auto" value="Sign Up">
-        </div>
-    </form>
-    <div class="d-flex justify-content-center">
-        <p>Already user?</p><a class="ms-1" href="/Login">Log in</a>
-    </div>
-</div>
+    </Authorized>
+</AuthorizeView>
 
 @code {
-    
+    private string userName = "";
+    private string password = "";
+    private string errorLabel;
+
+    private async Task RegisterAsync()
+    {
+        errorLabel = "";
+        try
+        {
+            UserCreationDTO userToCreate = new()
+            {
+                Username = userName,
+                Password = password
+            };
+            await userService.CreateAsync(userToCreate);
+            navMgr.NavigateTo("/Login");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"{e.Message}";
+        }
+    }
 }

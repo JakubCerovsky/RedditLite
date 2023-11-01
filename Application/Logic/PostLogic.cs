@@ -34,6 +34,11 @@ public class PostLogic:IPostLogic
         return await postDAO.GetAsync();
     }
 
+    public async Task<Post> GetSingleAsync(SearchPostParametersDTO postParametersDto)
+    {
+        return await postDAO.GetByIdAsync(postParametersDto.Id);
+    }
+
     private static void ValidatePost(PostCreationDTO postToValidate)
     {
         if (string.IsNullOrEmpty(postToValidate.Title)) 

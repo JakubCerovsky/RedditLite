@@ -32,6 +32,23 @@ public class PostHttpClient:IPostService
         return post;
     }
 
+    public async Task<Post> GetSingleAsync(SearchPostParametersDTO searchParameters)
+    {
+        HttpResponseMessage response = await client.GetAsync($"/posts/{searchParameters.Id}");
+        string result = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+
+        Console.WriteLine(result);
+        Post post = JsonSerializer.Deserialize<Post>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return post;
+    }
+
     public async Task<IEnumerable<Post>> GetAsync()
     {
         HttpResponseMessage response = await client.GetAsync("/posts");

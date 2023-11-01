@@ -1,0 +1,43 @@
+@page "/PostDetails/{postId:int}"
+@using Domain.Model
+@using HttpClient.ClientInterfaces
+@inject IPostService postService
+@using Domain.DTOs.PostDTO
+
+        @if (!string.IsNullOrEmpty(errorLabel))
+        {
+            <div class="field">
+                <label style="color: red">
+                    @errorLabel
+                </label>
+            </div>
+        }
+@if (post != null)
+        {
+            <PostComponent Title="@post.Title" Body="@post.Body" OwnerUsername="@post.OwnerUsername" />
+            <p class="text-light mt-3 text-center">Comment section will be implemented soon!</p>
+        }
+
+@code {
+    Post post;
+    private string errorLabel;
+    
+    [Parameter]
+    public int PostId { get; set; }
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        errorLabel = "";
+        try
+        {
+            SearchPostParametersDTO postParameters = new(PostId);
+            post = await postService.GetSingleAsync(postParameters);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"{e.Message}";
+        }
+    }
+}

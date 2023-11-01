@@ -1,18 +1,32 @@
+@inject NavigationManager navMgr
         
-        <div class="w-100 flex-column p-5 mb-4 border border-danger border-1">
-            <h3 class="mb-2">@OwnerUsername</h3>
-            <h4>@Title</h4>
-            <p>@Body</p>
+        <div class="w-100 flex-column p-5 bg-light border border-danger border-1 postcard" @onclick="RedirectToPostDetails">
+            <h2 class="fst-italic">"@Title"</h2>
+            @if (!string.IsNullOrEmpty(@Body))
+            {
+                <p>@Body</p>   
+            }
+            <h5 class="mt-2 text-end">- @OwnerUsername</h5>
         </div>
 @code {
 
     [Parameter]
+    public int? Id { get; set; } 
+    
+    [Parameter]
     public string Title { get; set; }
     
     [Parameter]
-    public string Body { get; set; }
+    public string? Body { get; set; }
 
     [Parameter]
     public string OwnerUsername { get; set; }
 
+    private void RedirectToPostDetails()
+    {
+        if (Id.HasValue)
+        {
+            navMgr.NavigateTo($"/PostDetails/{Id}");
+        }
+    }
 }
