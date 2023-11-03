@@ -15,6 +15,8 @@ The 3 assignments will cover:
 
 ## Results
 
+#### https://www.youtube.com/watch?v=qTzS_CMBgEg&t=s&ab_channel=JakubCerovsky
+
 #### Home Page
 
 <img width="1106" alt="image" src="https://github.com/JakubCerovsky/RedditLite/assets/95249435/c3a93765-b2e0-43cb-857a-3c6517cc70ff">
