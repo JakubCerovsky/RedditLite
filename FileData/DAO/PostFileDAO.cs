@@ -26,7 +26,7 @@ public class PostFileDAO:IPostDAO
 
         context.Posts.Add(post);
         context.Users
-            .FirstOrDefault(user => post.OwnerUsername.Equals(user.Username, StringComparison.OrdinalIgnoreCase)).Posts
+            .FirstOrDefault(user => post.Owner.Username.Equals(user.Username, StringComparison.OrdinalIgnoreCase)).Posts
             .Add(post);
         context.SaveChanges();
 

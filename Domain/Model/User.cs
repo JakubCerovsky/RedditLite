@@ -1,13 +1,13 @@
-﻿namespace Domain.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace Domain.Model;
 
 public class User
 {
+    [Key]
     public string Username { get; set; }
     public string Password { get; set; }
-    public List<Post> Posts { get; set; }
-
-    public User()
-    {
-        Posts = new List<Post>();
-    }
+    [JsonIgnore]
+    public ICollection<Post> Posts { get; set; }
 }

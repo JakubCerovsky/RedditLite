@@ -2,6 +2,7 @@
 @using Domain.Model
 @using HttpClient.ClientInterfaces
 @inject IUserService userService
+@inject IPostService postService
 @using System.Security.Claims
 @using Domain.DTOs.UserDTO
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -11,29 +12,36 @@
             <h1 class="text-danger text-center">You do not have access to this page unless you are a registered user!</h1>
     </NotAuthorized>
     <Authorized>
-        @if (!string.IsNullOrEmpty(errorLabel))
-        {
-            <div class="field">
-                <label style="color: red">
-                    @errorLabel
-                </label>
-            </div>
-        }
-        
         @if (user != null)
         {
             <h1 class="mt-3 mb-5 text-light">Hello @user.Username!</h1>
-            @foreach (var post in user.Posts)
+            @if (posts.Any())
             {
-                <PostComponent Title="@post.Title" OwnerUsername="@post.OwnerUsername" Body="@post.Body"/>
+                <h4 class="mt-3 mb-5 text-light">Here are all your posts!</h4>
+                @foreach (var post in posts)
+                {
+                    <PostComponent Title="@post.Title" OwnerUsername="@post.OwnerUsername" Body="@post.Body"/>
+                }
+            }
+            else
+            {
+                <h4 class="mt-3 mb-5 text-light">You do not have any posts yet! Why don't you start now?! &#128513;</h4>
             }
         }
-
+                @if (!string.IsNullOrEmpty(errorLabel))
+                {
+                    <div class="field">
+                        <label style="color: red">
+                            @errorLabel
+                        </label>
+                    </div>
+                }
     </Authorized>
 </AuthorizeView>
 
 @code {
     User user;
+    IEnumerable<Post> posts;
     private string errorLabel;
 
     
@@ -49,6 +57,7 @@
         {
             SearchUserParametersDTO userParameters = new(null, authUser.Identity.Name);
             user = await userService.GetSingleAsync(userParameters);
+            posts = await postService.GetAsync(user.Username);
         }
         catch (Exception e)
         {

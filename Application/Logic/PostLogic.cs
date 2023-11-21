@@ -29,14 +29,14 @@ public class PostLogic:IPostLogic
         return created;
     }
 
-    public async Task<IEnumerable<Post>> GetAsync()
+    public async Task<IEnumerable<Post>> GetAsync(SearchPostParametersDTO postParametersDto)
     {
-        return await postDAO.GetAsync();
+        return await postDAO.GetAsync(postParametersDto);
     }
 
-    public async Task<Post> GetSingleAsync(SearchPostParametersDTO postParametersDto)
+    public async Task<Post> GetSingleByIdAsync(int id)
     {
-        return await postDAO.GetByIdAsync(postParametersDto.Id);
+        return await postDAO.GetByIdAsync(id);
     }
 
     private static void ValidatePost(PostCreationDTO postToValidate)

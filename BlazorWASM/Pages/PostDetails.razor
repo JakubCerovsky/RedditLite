@@ -2,7 +2,6 @@
 @using Domain.Model
 @using HttpClient.ClientInterfaces
 @inject IPostService postService
-@using Domain.DTOs.PostDTO
 
         @if (!string.IsNullOrEmpty(errorLabel))
         {
@@ -31,8 +30,7 @@
         errorLabel = "";
         try
         {
-            SearchPostParametersDTO postParameters = new(PostId);
-            post = await postService.GetSingleAsync(postParameters);
+            post = await postService.GetSingleAsync(PostId);
         }
         catch (Exception e)
         {

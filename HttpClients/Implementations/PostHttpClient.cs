@@ -32,9 +32,9 @@ public class PostHttpClient:IPostService
         return post;
     }
 
-    public async Task<Post> GetSingleAsync(SearchPostParametersDTO searchParameters)
+    public async Task<Post> GetSingleAsync(int postId)
     {
-        HttpResponseMessage response = await client.GetAsync($"/posts/{searchParameters.Id}");
+        HttpResponseMessage response = await client.GetAsync($"/posts/{postId}");
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
@@ -49,9 +49,9 @@ public class PostHttpClient:IPostService
         return post;
     }
 
-    public async Task<IEnumerable<Post>> GetAsync()
+    public async Task<IEnumerable<Post>> GetAsync(string? ownerUsername)
     {
-        HttpResponseMessage response = await client.GetAsync("/posts");
+        HttpResponseMessage response = await client.GetAsync("/posts"+$"?ownerUsername={ownerUsername}");
         string result = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {

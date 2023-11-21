@@ -2,11 +2,11 @@ namespace Domain.DTOs.PostDTO;
 
 public class SearchPostParametersDTO
 {
-    public int Id { get; }
+    public string? OwnerUsername { get; }
 
-    public SearchPostParametersDTO(int id)
+    public SearchPostParametersDTO(string? ownerUsername)
     {
-        Id = id;
+        OwnerUsername = ownerUsername;
     }
 
 }
